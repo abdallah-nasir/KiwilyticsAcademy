@@ -1,208 +1,188 @@
-# Kiwilytics Docker Environment
+🧪 Kiwilytics Data Engineering VM
 
-A modern Docker-based environment for Kiwilytics data Engineering workflows, migrated from VirtualBox VM.
+Welcome to the **Kiwilytics Data Engineering Virtual Machine** — a fully configured Ubuntu environment to help students learn and apply ETL, orchestration, and analysis using tools like **Apache Airflow**, **PostgreSQL**, and **Python**.
 
-## Quick Connection Reference
+---
 
-**Airflow**: http://localhost:8080 (kiwilytics/kiwilytics)  
-**Jupyter**: http://localhost:8888  
-**PostgreSQL**: localhost:5433 (retaildb/kiwilytics/kiwilytics)
+## 🧰 Prerequisites
 
-## Complete Setup Guide
+To run the VM, you will need:
 
-### For First-Time Users (Complete Setup)
+- **A computer with at least 8 GB RAM and 30 GB of free disk space**
+- **Oracle VirtualBox** installed
+- The **Kiwilytics VM image** (provided separately)
 
-#### Step 1: Prerequisites
-1. **Install Docker Desktop**
-   - Download from [docker.com](https://www.docker.com/products/docker-desktop/)
-   - Install and start Docker Desktop
-   - Ensure Docker is running (you should see the Docker icon in your menu bar)
+---
 
-2. **Verify Installation**
-   ```bash
-   docker --version
-   docker compose version
-   ```
+## 🪟 Step 1: Install Oracle VirtualBox
 
-#### Step 2: Clone/Download Project
-1. **Download the project files** to your local machine
-2. **Open Terminal/Command Prompt** and navigate to the project directory:
-   ```bash
-   cd /path/to/kiwilytics
-   ```
+Download and install VirtualBox from the official website:
 
-#### Step 3: Initial Setup
-1. **Run the migration script** to create all necessary files:
-   ```bash
-   ./vm_to_docker_migration.sh
-   ```
+👉 https://www.virtualbox.org/wiki/Downloads
 
-2. **Build and start the environment**:
-   ```bash
-   make quick-setup
-   ```
+✅ **Choose the correct version for your operating system**
 
-#### Step 4: Verify Installation
-1. **Check container status**:
-   ```bash
-   docker ps
-   ```
-   You should see two containers running: `kiwilytics-kiwilytics-1` and `kiwilytics-postgres-1`
+<img width="1855" height="842" alt="image" src="https://github.com/user-attachments/assets/8c2e807a-be0a-4941-bf91-76d1ac989467" />
 
-2. **Access your services**:
-   - **Airflow**: http://localhost:8080 (username: `kiwilytics`, password: `kiwilytics`)
-   - **Jupyter**: http://localhost:8888
-   - **PostgreSQL**: localhost:5433
+---
 
-### For Returning Users (Start Existing Environment)
+## 🗂️ Step 2: Download the Kiwilytics VM Image
 
-#### Quick Start Commands
+Download the `.ova` file from this link:
+
+🔗 **[[Insert your download link here]](https://drive.google.com/file/d/1wMbJtg8a0ZnH4TzbfxXg9KIMLwBlL7O2/view?usp=share_link)**
+
+💡 Make sure you verify the download is complete 
+
+📸 _**(Insert screenshot of the download button or location)**_
+
+---
+
+## 📦 Step 3: Import the VM into VirtualBox
+
+1. Open **VirtualBox**
+2. Go to `File` → `Import Appliance`
+3. Choose the browse option then Select the downloaded `.ova` file/
+4. Click **Next**, then **Finish**.
+5. Wait for the VM box to Import the image, This could take a **While**.
+
+<img width="788" height="717" alt="image" src="https://github.com/user-attachments/assets/04ac368f-a7ed-4766-9022-55a48ceb5507" />
+
+
+<img width="1600" height="297" alt="image" src="https://github.com/user-attachments/assets/9dce3150-5173-41f0-a119-6749ebe1f023" />
+
+
+💡 This will create a new VM named **Kiwilytics_VM**
+
+---
+
+## ▶️ Step 4: Start the Virtual Machine
+<img width="1600" height="720" alt="image" src="https://github.com/user-attachments/assets/a83f9d45-6f51-498d-9109-148099f89a69" />
+
+
+1. Select the VM from the left pane in VirtualBox.
+2. Click **Start**.
+3. Wait for the VM to open.
+4. Login.
+---
+
+## 🧑‍🎓 Audience
+
+This VM is prepared for students of the **Data Engineering course**, enabling them to perform:
+
+- DAG orchestration using Airflow
+- SQL and database work using PostgreSQL
+- Data processing with Python, Pandas, and Matplotlib
+- Visualization and ETL tasks using preinstalled tools
+
+---
+
+## 🔧 Pre-installed Tools
+
+| Tool          | Description                     |
+|---------------|---------------------------------|
+| Python        | Pre-installed for scripting     |
+| Apache Airflow| Workflow orchestration tool     |
+| PostgreSQL    | Relational database             |
+| DBeaver       | GUI for PostgreSQL              |
+| VSCode        | Code editor                     |
+| Git           | Version control system          |
+| Pandas        | Data analysis library           |
+| Matplotlib    | Data visualization library      |
+
+---
+
+## 📁 Folder Structure
+
+| Path                                 | Description                           |
+|--------------------------------------|---------------------------------------|
+| `/home/kiwilytics/airflow/`          | Contains all Airflow DAGs             |
+| `/home/kiwilytics/Desktop/github/`   | Cloned GitHub repo for the course     |
+
+---
+
+## 🚀 Using the VM
+
+### 🌀 Start Airflow
+
+Open a terminal and run:
+
 ```bash
-# Start all services
-make up
-
-# View running services
-docker ps
-
-# View logs
-make logs
-
-# Stop all services
-make down
+airflow webserver -p 8080
 ```
 
-#### If Services Won't Start
-1. **Check for port conflicts**:
-   ```bash
-   lsof -i :8080
-   lsof -i :8888
-   lsof -i :5433
-   ```
+In a second terminal:
 
-2. **Reset and restart**:
-   ```bash
-   make down
-   make up
-   ```
-
-3. **Full reset** (if needed):
-   ```bash
-   make clean
-   make build
-   make up
-   ```
-
-### Manual Control Options
 ```bash
-# Build Docker images
-make build
-
-# Start services
-make up
-
-# View logs
-make logs
-
-# Stop services
-make down
-
-# Clean everything (containers, volumes, images)
-make clean
+airflow scheduler
 ```
 
-## Access Points
+Then open your browser locally or inside the virtual machine and go to: [http://localhost:8080](http://localhost:8080)
 
-Once running, access your environment at:
-
-### **Airflow Web UI**
-- **URL**: http://localhost:8080
 - **Username**: `kiwilytics`
 - **Password**: `kiwilytics`
 
-### **Jupyter Notebook**
-- **URL**: http://localhost:8888
-- **Authentication**: No authentication required
+<img width="1885" height="850" alt="image" src="https://github.com/user-attachments/assets/76b7ec95-9016-4b19-83e9-01c77b94e014" />
 
-### **PostgreSQL Database**
+
+---
+
+### 🗄️ Connect to PostgreSQL
+
+Use DBeaver or the terminal to access PostgreSQL.
+Our database is already connected to DBeaver inside the Virtual Machine
+
+**Default settings**:
+
 - **Host**: `localhost`
-- **Port**: `5433`
+- **Port**: `5432`
 - **Database**: `retaildb`
 - **Username**: `kiwilytics`
 - **Password**: `kiwilytics`
 
-#### **DBeaver Connection Settings**
-When setting up a new connection in DBeaver:
-1. **Connection Type**: PostgreSQL
-2. **Host**: `localhost`
-3. **Port**: `5433`
-4. **Database**: `retaildb`
-5. **Username**: `kiwilytics`
-6. **Password**: `kiwilytics`
-7. **Save Password**: Check this option for convenience
-
-## Project Structure
-
-```
-kiwilytics/
-├── docker-compose.yml      # Docker services configuration
-├── Dockerfile             # Kiwilytics container definition
-├── Makefile               # Build and deployment commands
-├── vm_to_docker_migration.sh  # Migration script
-├── README.md              # Project documentation and quick start guide
-├── docs/                  # Documentation folder
-│   ├── MIGRATION_GUIDE.md # Detailed migration instructions
-│   └── SETUP_GUIDE.md     # Complete setup and usage guide
-├── extracted/             # Data extracted from VM (if available)
-│   ├── airflow/dags/     # Airflow DAGs from VM
-│   └── github/           # Course materials from VM
-├── dags/                  # Custom DAGs directory
-├── notebooks/             # Jupyter notebooks
-└── data/                  # Data files
-```
-
-## Prerequisites
-
-- Docker Desktop installed and running
-- VirtualBox (optional, for VM data extraction)
-- Make (usually pre-installed on macOS)
-
-## Documentation
-
-- **[docs/SETUP_GUIDE.md](docs/SETUP_GUIDE.md)** - Complete step-by-step setup and usage guide
-- **[docs/MIGRATION_GUIDE.md](docs/MIGRATION_GUIDE.md)** - VM to Docker migration instructions
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Port conflicts**: If ports 8080, 8888, or 5432 are in use, modify `docker-compose.yml`
-2. **Permission issues**: Ensure Docker has access to the project directory
-3. **Build failures**: Check Docker logs with `make logs`
-
-### Reset Environment
-```bash
-make clean    # Remove all containers and volumes
-make build    # Rebuild from scratch
-make up       # Start fresh
-```
-
-## Benefits Over VM
-
-- **90% faster startup** (seconds vs minutes)
-- **70% less disk usage** (2GB vs 8GB+)
-- **Better resource efficiency**
-- **Easier sharing and deployment**
-- **Modern development practices**
-- **Cross-platform compatibility**
-
-## Support
-
-For issues or questions:
-1. Check the logs: `make logs`
-2. Review the migration guide: `docs/MIGRATION_GUIDE.md`
-3. Reset and rebuild: `make clean && make build`
+<img width="759" height="759" alt="image" src="https://github.com/user-attachments/assets/7192839e-42e9-496b-8d57-99b68fdb3af0" />
 
 
-## Important Notice
+---
 
-To ensure a smooth migration and access to all required datasets, please download the `Kiwilytics_VM.ova` file and place it in the root directory of the `Kiwilytics_DE_Docker` project (e.g., `/path/to/Kiwilytics_DE_Docker`). This step is required for extracting legacy data and materials from the original virtual machine environment.
+## 🧪 Airflow Hands-on 
+
+Students can:
+
+- Build DAGs for ETL pipelines using Airflow
+- Write SQL and run queries on Postgres
+- Process data using Pandas and plot it with Matplotlib
+- Use VSCode to code and Git to track changes
+
+---
+
+## 🛠️ Troubleshooting & Tips
+
+### ✅ Airflow won’t start?
+- Run the scheduler in another terminal
+- Check if port 8080 is already in use
+
+### ✅ PostgreSQL won’t connect?
+- Check if PostgreSQL is running: `sudo service postgresql status`
+- Verify credentials and port
+
+### ✅ Use VSCode
+To launch VSCode:
+1- Through applications and open VS Code
+2- Through terminal
+  ```bash
+  code
+  ```
+
+---
+
+## 📬 Support
+
+Reach out to your instructor or teaching assistant via the course forum or communication channel.
+
+---
+
+## 📜 License
+
+This VM is distributed as part of the **Kiwilytics Data Engineering Program**.  
+**For educational use only.**
