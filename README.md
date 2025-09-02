@@ -182,6 +182,7 @@ One of our course learners, Mohamed Abdulaziz Eisa, kindly shared a workaround s
 🔗 GitHub Repo: [Kiwilytics_DE_Docker](https://github.com/kiwilytics/Kiwilytics_DE_Docker)
 
 This is a community contribution by Mohamed Abdulaziz Eisa, and we’re adding it here as a recommended option for Mac users.
+
 ---
 
 ## 📬 Support
