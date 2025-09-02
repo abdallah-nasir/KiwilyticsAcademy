@@ -171,7 +171,17 @@ To launch VSCode:
   ```bash
   code
   ```
+## 💻 Mac Users — Important Note
 
+The .ova file provided is x86-only, which means it will not run on Apple Silicon (M1/M2) Macs.
+
+One of our course learners, Mohamed Abdulaziz Eisa, kindly shared a workaround solution:
+
+“I hit the same wall on my Mac. Instead, I built a Docker image and put together a repo that handles everything. It runs clean on my machine. Just make sure you’ve got Docker + DBeaver installed first. The docs have the full setup guide step by step. If you struggle with the setup, feel free to reach out to me.”
+
+🔗 GitHub Repo: [Kiwilytics_DE_Docker](https://github.com/kiwilytics/Kiwilytics_DE_Docker)
+
+This is a community contribution by Mohamed Abdulaziz Eisa, and we’re adding it here as a recommended option for Mac users.
 ---
 
 ## 📬 Support
