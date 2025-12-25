@@ -2,28 +2,20 @@ FROM python:3.11-slim
 
 ENV AIRFLOW_HOME=/opt/airflow
 ENV DEBIAN_FRONTEND=noninteractive
-ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
-ENV AIRFLOW__CORE__EXECUTOR=LocalExecutor
-ENV AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=sqlite:///opt/airflow/airflow.db
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     git \
     curl \
-    gcc \
-    python3-dev \
-    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python packages with constraints
+# Install Python packages
 RUN pip install --no-cache-dir \
-    "apache-airflow[postgres]==2.8.4" \
-    --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.8.4/constraints-3.11.txt"
-
-RUN pip install --no-cache-dir \
-    pandas==2.1.3 \
+  apache-airflow==2.7.2 \
+  --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.7.2/constraints-3.11.txt" \
     matplotlib==3.8.2 \
+    psycopg2-binary==2.9.9 \
     jupyter==1.0.0
 
 # Create user and directories
@@ -34,6 +26,16 @@ RUN useradd -m -u 1000 kiwilytics && \
     chown -R kiwilytics:kiwilytics $AIRFLOW_HOME /home/kiwilytics
 
 USER kiwilytics
+
+# Initialize Airflow
+RUN airflow db init && \
+    airflow users create \
+    --username kiwilytics \
+    --firstname Kiwi \
+    --lastname Analytics \
+    --role Admin \
+    --email admin@kiwilytics.com \
+    --password kiwilytics
 
 # Start script
 COPY --chown=kiwilytics:kiwilytics start.sh /start.sh

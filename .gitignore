@@ -1,1 +1,3 @@
-Kiwilytics_VM.ova
+env/
+# add the .xml files
+*.xml

@@ -5,7 +5,7 @@ migrate: extract build up
 
 # Extract data from VM (if possible)
 extract:
-	@echo "Starting data extraction..."
+	@echo " Starting data extraction..."
 	@bash vm_to_docker_migration.sh extract
 
 # Build Docker images
@@ -15,9 +15,9 @@ build:
 # Start the environment
 up:
 	docker compose up -d
-	@echo "Environment started!"
-	@echo "Airflow: http://localhost:8080"
-	@echo "Jupyter: http://localhost:8888"
+	@echo " Environment started!"
+	@echo " Airflow: http://localhost:8080"
+	@echo " Jupyter: http://localhost:8888"
 
 # Stop everything
 down:
@@ -34,7 +34,7 @@ clean:
 
 # Quick setup without migration
 quick-setup:
-	@echo "Quick setup without VM data..."
+	@echo "⚡ Quick setup without VM data..."
 	@touch retaildb_backup.sql
 	@mkdir -p extracted/airflow/dags extracted/github
 	@$(MAKE) build up

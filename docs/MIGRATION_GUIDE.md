@@ -1,6 +1,6 @@
-# VM to Docker Migration Guide
+#  VM to Docker Migration Guide
 
-## Recommended Approach
+##  Recommended Approach
 
 Instead of extracting the .ova file (which has compatibility issues), use this approach:
 
@@ -46,7 +46,7 @@ If you don't need the existing VM data:
 make quick-setup
 ```
 
-## Why This Is Better Than .ova Extraction
+## 🔧 Why This Is Better Than .ova Extraction
 
 | Issue | .ova Extraction | This Approach |
 |-------|----------------|---------------|
@@ -56,7 +56,7 @@ make quick-setup
 | **Dependencies** | ❌ System-level configs | ✅ Clean environment |
 | **Maintenance** | ❌ Complex debugging | ✅ Standard Docker |
 
-## Benefits of Docker Approach
+##  Benefits of Docker Approach
 
 - **90% faster startup** (seconds vs minutes)
 - **70% less disk usage** (2GB vs 8GB+)

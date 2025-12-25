@@ -14,7 +14,7 @@ default_args = {
 }
 
 # SQL queries as variables
-CREATE_SALES_TABLE_SQL = """
+CREATE_SALES_TABLE_SQL ="""
     CREATE TABLE IF NOT EXISTS sales (
         CustomerID TEXT PRIMARY KEY,
         CustomerName TEXT,
