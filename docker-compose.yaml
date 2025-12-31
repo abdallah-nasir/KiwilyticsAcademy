@@ -1,0 +1,58 @@
+version: "3.8"
+
+x-airflow-common: &airflow-common
+  build: .
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+
+    # Airflow metadata DB (your existing Postgres)
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+
+    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__API__AUTH_BACKENDS: airflow.api.auth.backend.basic_auth
+    AIRFLOW__WEBSERVER__WEB_SERVER_PORT: "7777"
+    AIRFLOW__WEBSERVER__WEB_SERVER_HOST: "0.0.0.0"
+
+    # Connection for your DAGs (PostgresHook)
+    # Connection ID will be: pg_default
+    AIRFLOW_CONN_PG_DEFAULT: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins
+
+  # prevents the /opt/airflow/logs permission error on Linux
+  user: "${AIRFLOW_UID}:0"
+
+  # if your DB is on the HOST machine (not a container), keep this:
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+services:
+  airflow-webserver:
+    <<: *airflow-common
+    command: webserver
+    ports:
+      - "7777:7777"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:7777/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+
+  airflow-init:
+    <<: *airflow-common
+    user: "0:0"
+    command: >
+      bash -c "
+      mkdir -p /opt/airflow/logs /opt/airflow/dags /opt/airflow/plugins &&
+      chown -R ${AIRFLOW_UID}:0 /opt/airflow &&
+      airflow db migrate &&
+      airflow users list | grep -q '^admin\b' || airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com
+      "

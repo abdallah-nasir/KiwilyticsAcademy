@@ -1,3 +1,4 @@
 env/
 # add the .xml files
 *.xml
+.env

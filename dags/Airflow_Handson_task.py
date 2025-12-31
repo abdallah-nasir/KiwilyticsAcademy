@@ -5,10 +5,10 @@ from datetime import timedelta
 from airflow.hooks.postgres_hook import PostgresHook
 
 # PostgreSQL connection ID configured in Airflow
-PG_CONN_ID = 'postgres_conn'
+PG_CONN_ID = 'pg_default'
 
 default_args = {
-    'owner': 'kiwilytics',
+    'owner': 'admin',
     'retries': 1,
     'retry_delay': timedelta(minutes=2),
 }
@@ -86,3 +86,5 @@ with DAG(
     )
 
     t1 >> t2
+
+# Total daily revenue
