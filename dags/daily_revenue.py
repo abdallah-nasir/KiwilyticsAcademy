@@ -68,12 +68,11 @@ def plot_daily_revenue(data: list):
     plt.savefig("/home/airflow/daily_revenue.png")
     plt.show()
 
-# total revenue on 1996-08-08
+# task 5 total revenue on specific date 1996-08-08
 def calculate_total_revenue_on_date(date: str="1996-08-08"):
     data = pd.read_csv("/home/airflow/daily_revenue.csv")
     total_revenue = data[data["orderdate"] == date]["revenue"].sum()
     return total_revenue
-
 
 with DAG(
     dag_id="daily_revenue",
